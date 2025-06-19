@@ -9,7 +9,21 @@ jobs:
         runs-on: ubuntu-latest
         
         steps:
-          - name: Trigger deployment on Render platform
+          - name: Checkout code
+            uses: actions/checkout@v3
+
+          - name: Setup Node.js
+            uses: actions/setup-node@v3
+            with:
+                node-version: '20'
+
+          - name: Install dependencies
+            run: npm install
+
+          - name: Run tests
+            run: npm test
+            
+          - name: Trigger Render Deployment
             env:
               RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
             run: |
